@@ -1,0 +1,1 @@
+/usr/bin/c++ CMakeFiles/runAllTests.dir/test_main.cpp.o CMakeFiles/runAllTests.dir/home/csmajs/smira040/myRobot/src/Motor.cpp.o CMakeFiles/runAllTests.dir/home/csmajs/smira040/myRobot/src/Pot.cpp.o -o runAllTests  lib/libgmock.a lib/libgtest.a lib/libgtest_main.a -lpthread lib/libgtest.a -lpthread 
