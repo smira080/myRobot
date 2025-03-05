@@ -3,7 +3,7 @@
 
 #include <Arduino.h>
 #include <Servo.h>
-#include "Pot.h"  // Ensure filename matches case
+#include "Pot.h"
 
 #define MIN_ANGLE 0
 #define MAX_ANGLE 180
@@ -14,7 +14,8 @@ private:
     Servo myServo;
     int currAngle;
     int servoAngle;
-    Pot myPot;
+    Pot* myPot;  // Use pointer to handle optional potentiometer
+    bool hasPot; // Flag to track if potentiometer is present
 
 public:
     // Constructor for motor only (no potentiometer)
@@ -27,4 +28,3 @@ public:
 };
 
 #endif
-

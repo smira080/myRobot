@@ -1,18 +1,26 @@
 #include <Arduino.h>
+#include "../include/Motor.h"
+#include "../include/Pot.h"
 
-// put function declarations here:
-int myFunction(int, int);
+
+#define servoPin 10
+#define potPin A0
+
+Motor motor1(servoPin, potPin);
 
 void setup() {
-  // put your setup code here, to run once:
-  int result = myFunction(2, 3);
+  Serial.begin(9600);
+  delay(1000);
 }
 
 void loop() {
-  // put your main code here, to run repeatedly:
-}
+  motor1.Move();
 
-// put function definitions here:
-int myFunction(int x, int y) {
-  return x + y;
+  // Debugging: Print potentiometer value and corresponding servo angle
+  Serial.print("Potentiometer Value: ");
+  Serial.print(analogRead(potPin));
+  Serial.print(" | Servo Angle: ");
+  Serial.println(map(analogRead(potPin), 0, 1023, 0, 180));
+
+  delay(100);  // Small delay to avoid excessive updates
 }
