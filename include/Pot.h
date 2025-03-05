@@ -9,7 +9,7 @@ private:
 
 public:
     Pot(int pin);  // Constructor
-    int readValue();
+    int readValue()const;
 };
 
 #endif

@@ -1,31 +1,70 @@
 #include "../include/Motor.h"
 
-// Constructor: Motor only (no potentiometer)
-Motor::Motor(int pin) : servoPin(pin), currAngle(0), myPot(nullptr), hasPot(false) {  
-    myServo.attach(servoPin);
-    myServo.write(currAngle);
+#define DEAD_ZONE 3
+
+
+
+Motor::Motor(int pin, int potPin) : servoPin(pin), servoAngle(0), hasPot(true) {
+    Serial.println("Initializing Motor...");
+    
+    myServo = new Servo(); // Allocate memory for Servo object
+    myServo->attach(servoPin);
+    Serial.println("Servo Attached!");
+
+    myServo->write(servoAngle);
+    myPot = new Pot(potPin);
 }
 
-// Constructor: Motor + Potentiometer
-Motor::Motor(int pin, int potPin) : servoPin(pin), currAngle(0), hasPot(true) {
-    myServo.attach(servoPin);
-    myServo.write(currAngle);
-    myPot = new Pot(potPin); // Dynamically allocate Pot instance
-}
+// void Motor::Move() {
+//     if (!myServo) return;
 
-// Move function: Reads potentiometer and adjusts servo angle
+//     myServo->detach();  // Detach first
+//     delay(10);          // Small delay to stabilize
+//     myServo->attach(servoPin);  // Reattach every loop
+
+//     if (hasPot && myPot) {
+//         servoAngle = map(myPot->readValue(), 0, 1023, MIN_ANGLE, MAX_ANGLE);
+//     } else {
+//         servoAngle = MIN_ANGLE;
+//     }
+
+//     Serial.print("Moving Servo to: ");
+//     Serial.println(servoAngle);
+
+//     myServo->write(servoAngle);
+//     delay(100);
+// },
+
 void Motor::Move() {
-    if (hasPot && myPot) {
-        servoAngle = map(myPot->readValue(), 0, 1023, MIN_ANGLE, MAX_ANGLE);
-    } else {
-        servoAngle = MIN_ANGLE; // Default position if no potentiometer
+    if (!myServo) return;
+
+    if (!myServo->attached()) {
+        Serial.println("Reattaching Servo...");
+        myServo->attach(servoPin);
+        delay(10);
     }
-    myServo.write(servoAngle);
+
+    int newAngle = map(myPot->readValue(), 0, 1023, MIN_ANGLE, MAX_ANGLE);
+
+    if (abs(newAngle - servoAngle) > DEAD_ZONE) {
+        servoAngle = newAngle;
+        Serial.print("Moving Servo to: ");
+        Serial.println(servoAngle);
+        myServo->write(servoAngle);
+    }
+
+    delay(50);
 }
 
 // Destructor (to avoid memory leak)
 Motor::~Motor() {
-    if (hasPot && myPot) {
+    if (myServo) {
+        delete myServo;
+        myServo = nullptr;
+    }
+    if (myPot) {
         delete myPot;
+        myPot = nullptr;
     }
 }
+

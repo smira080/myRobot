@@ -4,6 +4,6 @@ Pot::Pot(int pin) : potPin(pin) {
     pinMode(potPin, INPUT);
 }
 
-int Pot::readValue() {
+int Pot::readValue()const {
     return analogRead(potPin);
 }

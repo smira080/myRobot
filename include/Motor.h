@@ -11,20 +11,20 @@
 class Motor {
 private:
     int servoPin;
-    Servo myServo;
-    int currAngle;
+    Servo *myServo;
     int servoAngle;
     Pot* myPot;  // Use pointer to handle optional potentiometer
     bool hasPot; // Flag to track if potentiometer is present
+    //bool hasSenor; // Checks to see if sensor is present
 
 public:
-    // Constructor for motor only (no potentiometer)
-    Motor(int pin);
+    ~Motor();
 
     // Constructor for motor with potentiometer
     Motor(int servoPin, int potPin);
 
     void Move();
+    
 };
 
 #endif

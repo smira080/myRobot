@@ -2,25 +2,43 @@
 #include "../include/Motor.h"
 #include "../include/Pot.h"
 
+#define SERVO_PIN 10
+#define POT_PIN A0
 
-#define servoPin 10
-#define potPin A0
-
-Motor motor1(servoPin, potPin);
+Motor motor1(SERVO_PIN, POT_PIN);
 
 void setup() {
-  Serial.begin(9600);
-  delay(1000);
+    Serial.begin(9600);
+    delay(1000);  // Allow time for Serial Monitor to start
 }
 
 void loop() {
-  motor1.Move();
-
-  // Debugging: Print potentiometer value and corresponding servo angle
-  Serial.print("Potentiometer Value: ");
-  Serial.print(analogRead(potPin));
-  Serial.print(" | Servo Angle: ");
-  Serial.println(map(analogRead(potPin), 0, 1023, 0, 180));
-
-  delay(100);  // Small delay to avoid excessive updates
+    motor1.Move();
+    delay(500);  // Delay to slow down updates
 }
+
+
+// #include <Arduino.h>
+// #include <Servo.h>
+
+// Servo myServo;
+// #define SERVO_PIN 10
+
+// void setup() {
+//     Serial.begin(9600);
+//     myServo.attach(SERVO_PIN);
+// }
+
+// void loop() {
+//     Serial.println("Moving to 0°");
+//     myServo.write(0);
+//     delay(1000);
+
+//     Serial.println("Moving to 90°");
+//     myServo.write(90);
+//     delay(1000);
+
+//     Serial.println("Moving to 180°");
+//     myServo.write(180);
+//     delay(1000);
+// }
