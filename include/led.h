@@ -13,7 +13,7 @@ class Led{
         int brightness;
         Pot* myPot;
     public:
-        Led (int potPin);
+        Led (int, int);
         ~Led();
 
         void changeBrigtness();
