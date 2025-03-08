@@ -1,20 +1,16 @@
 #include "../include/led.h"
 
-Led::Led(int pin, int potPin) : ledPin(pin){
-    Pot* temp = new Pot(ledPin);
-    myPot = temp;
-    delete temp;
+Led::Led(int pin, int potPin) : ledPin(pin), brightness(MIN_BRIGHTNESS), hasPot(true){
+    myPot= new Pot(potPin);
     pinMode(ledPin, OUTPUT);
-    brightness = MIN_BRIGHTNESS;
+    analogWrite(ledPin, brightness);
 }
 
 void Led::changeBrigtness(){
     brightness = map(myPot->readValue(), 0, 1023, MIN_BRIGHTNESS, MAX_BRIGHTNESS);
     analogWrite(ledPin, brightness);
-    delay (20);
 }
 
 Led::~Led(){
     if (myPot) delete myPot;
 }
-

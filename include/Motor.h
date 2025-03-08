@@ -8,6 +8,13 @@
 #define MIN_ANGLE 0
 #define MAX_ANGLE 180
 
+// On boards other than the Mega, use of the library disables 
+// analogWrite() (PWM) functionality on pins 9 and 10, whether
+// or not there is a Servo on  those pins. On the Mega, up to 
+// 12 servos can be used without interfering with PWM 
+// functionality; use of 12 to 23 motors will disable PWM on pins
+//  11 and 12.
+
 class Motor {
 private:
     int servoPin;

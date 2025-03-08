@@ -11,6 +11,7 @@ class Led{
     private:
         int ledPin;
         int brightness;
+        bool hasPot;
         Pot* myPot;
     public:
         Led (int, int);
